@@ -12,27 +12,33 @@
           <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Button</button>
         </div>
       </div>
+      {% comment %} user form {% endcomment %}
       <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-        <form id="main" class="w-full ml-1 border p-5  rounded-lg w-1/2"">
+        <form action="{% url "sign-up" %}" method="post" id="main" class="w-full ml-1 border p-5  rounded-lg w-1/2"">
+        {% csrf_token %}
           <div class="mb-5 ">
-              <label for="-ac-no" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Ac No.</label>
-              <input type="text" id="-ac-no" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Account Number (Optional)"/>
+              <label for="-ac-no" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Username</label>
+              <input type="text" name="username" id="-ac-no" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Enter username"/>
           </div>
           <div class="mb-5 ">
-              <label for="-name" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Name</label>
-              <input type="text" id="-name" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="John Doe" required />
+              <label for="-name" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Email Id</label>
+              <input type="email" name="email-id" id="-name" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Enter Email Id " required />
+          </div>
+          <div class="mb-5 ">
+              <label for="-name" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> First Name</label>
+              <input type="text" name="first-name" id="-name" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Enter First name " required />
           </div>
           <div class="mb-5">
-              <label for="-mobile" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Mobile</label>
-              <input type="tel" id="-mobile" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="123-456-7890" required />
+              <label for="-mobile" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Last Name</label>
+              <input type="text" name="last-name" id="-mobile" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Enter Last name" required />
           </div>
           <div class="mb-5">
-              <label for="-email" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Email</label>
-              <input type="email" id="-email" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@example.com" required />
+              <label for="-email" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Password</label>
+              <input type="text" name="Password" id="-email" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Password" required />
           </div>
           <div class="mb-5">
-              <label for="-balance" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Balance</label>
-              <input value="0" type="text" id="-balance" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Balance" required />
+              <label for="-balance" class="block mb-2 text-sm font-medium text-black-900 dark:text-black"> Confirm Password</label>
+              <input name="Confirm-Password" type="text" id="-balance" class="shadow-sm bg-black-50 border border-black-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-black-700 dark:border-black-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Balance" required />
           </div>
           <div class="mb-5">
               <input value="Register" type="submit"  class="w-1/2 bg-green-500 p-2 text-white" />
