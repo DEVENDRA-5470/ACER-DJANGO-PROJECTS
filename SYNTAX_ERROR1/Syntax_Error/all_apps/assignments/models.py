@@ -23,6 +23,7 @@ class Project_Category(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title}"
+    
 class Project_Name(models.Model):
     project= models.ForeignKey(Project_Category, on_delete=models.CASCADE, related_name='projects')
     project_name=models.CharField(max_length=200)

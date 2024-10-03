@@ -7,7 +7,8 @@ urlpatterns=[
     path('sign-in/',sign_in,name="sign-in"),
     path('profile/', profile, name="profile"),
     path('profiles/update/<int:pk>/', ProfileUpdateView.as_view(), name='profile_update'),
-    path('user-logout/',user_logout,name='user-logout')
+    path('user-logout/',user_logout,name='user-logout'),
+    path('stats/',stats,name="stats")
 
     
 ]

@@ -5,7 +5,10 @@ from all_apps.users.models import *
 from django.views import View
 from all_apps.users.forms import *
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
+from .models import Profile, Stats
+from datetime import date
+from all_apps.assignments.models import *
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -109,3 +112,34 @@ class ProfileUpdateView(View):
 def user_logout(request):
     logout(request)
     return redirect('sign-in')
+
+
+
+
+def stats(request):
+    if request.method == "POST":
+       
+        topic_name = request.POST.get('topic_name')
+        assignment_id = request.POST.get('assignment_id')
+        topic_id = request.POST.get('topic_id')
+
+        try:
+            topic = AssignmentTopic.objects.get(id=topic_id)
+        except AssignmentTopic.DoesNotExist:
+            return HttpResponse("Topic not found.", status=404)
+
+
+        user_profile = request.user.profile  
+        user_stats, created = Stats.objects.get_or_create(profile=user_profile)
+
+        
+        if user_stats.topic_names:
+            user_stats.topic_names += f", {topic_name}"
+        else:
+            user_stats.topic_names = topic_name
+
+        user_stats.total_downloads += 1
+        user_stats.save()
+        return redirect(topic.pdf.url)
+    # If it's a GET request, render a stats page
+    return render(request, 'alls.html')

@@ -3,7 +3,7 @@
 
 <section>
 
-    <div class="flex flex-wrap justify-center  p-7 ">
+    <div class="flex flex-wrap justify-center p-7 ">
 
         <!-- HTML Topics Dropdown -->
         {% for assignment in as1 %}
@@ -16,10 +16,11 @@
                     </svg>
                 </button>
             </div>
-            <div class="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" id="dropdown-{{ assignment.id }}">
+            <div class="absolute z-20 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" id="dropdown-{{ assignment.id }}">
                 {% for topic in assignment.topics.all %}
                 <div class="py-1 px-2" role="none">
-                    <a href="{{ topic.pdf.url }}" download="{{ topic.pdf.name }}" class="block px-1 py-1 text-sm text-gray-700 hover:text-blue-600" role="menuitem">{{ topic.topic_name }}</a>
+                    <!-- Call the form submission and download in one function -->
+                    <a href="{{ topic.pdf.url }}" download="{{ topic.pdf.name }}" class="block px-1 py-1 text-sm text-gray-700 hover:text-blue-600" onclick="submitAndDownload(event, '{{ topic.id }}')">{{ topic.topic_name }}</a>
                 </div>
                 {% endfor %}
             </div>
@@ -30,22 +31,40 @@
 
 </section>
 
+<section>
+    <div class="flex flex-wrap justify-center p-7">
+        {% for assignment in as1 %}
+            {% for topic in assignment.topics.all %}
+            <form id="hiddenForm-{{ topic.id }}" method="post" action="{% url 'stats' %}">
+                {% csrf_token %}
+                <input type="hidden" name="topic_name" value="{{ topic.topic_name }}">
+                <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+                <input type="hidden" name="topic_id" value="{{ topic.id }}">
+            </form>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</section>
+
 <!-- Script moved after the content -->
 <script defer>
+    function submitAndDownload(event, topicId) {
+        event.preventDefault(); // Prevent default link behavior
+        // Get the form and submit it
+        const form = document.getElementById('hiddenForm-' + topicId);
+        form.submit();
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         {% for assignment in as1 %}
         {
-            // Declare variables inside the loop block to avoid redeclaration
             let buttonId = 'assignment-{{assignment.id}}';
             let dropdownId = 'dropdown-{{assignment.id}}';
 
             let button = document.getElementById(buttonId);
             let dropdown = document.getElementById(dropdownId);
             
-            // Check if the button and dropdown exist
             if (button && dropdown) {
-
-                // Add click event listener
                 button.addEventListener('click', () => {
                     dropdown.classList.toggle('hidden');
                 });
@@ -54,7 +73,5 @@
         {% endfor %}
     });
 </script>
-
-
 
 {% endblock content %}
