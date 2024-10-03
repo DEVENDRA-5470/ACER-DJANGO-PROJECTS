@@ -1,0 +1,20 @@
+# Use Python 3.11 with Debian Bullseye as the base image
+FROM python:3.11-bullseye
+
+# Set environment variables to ensure output is shown in real-time
+ENV PYTHONBUFFERED=1
+
+# Set the working directory inside the container
+WORKDIR /Syntax_Error
+
+# Copy the requirements file to the container
+COPY requirements.txt .
+
+# Install Python dependencies from the requirements file
+RUN pip3 install -r requirements.txt
+
+# Copy the entire current directory contents to the container
+COPY . .
+
+# Command to run the Django development server on port 8000, accessible externally
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
