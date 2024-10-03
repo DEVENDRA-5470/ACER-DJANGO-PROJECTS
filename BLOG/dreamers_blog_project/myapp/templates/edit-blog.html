@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Updated to use static tag correctly -->
+    <title>Edit Blog</title>
+</head>
+<body>
+    <div class="sidebar-main">
+        <div class="sidebar">
+            <a href="{% url 'admin-add-blog' %}">Add Blog</a><br>
+            <a href="{% url 'admin-add-category' %}">Add Category</a><br>
+            <a href="{% url 'edit-blog' %}" class="admin-edit-blog">Edit Blog</a><br>
+        </div>
+        <div class="sidebar-form-edit-blog">
+            <p>Edit Blog</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <select name="category" id="">
+                    <option value="#" disabled selected>Select by Category</option>
+                    {% for category in categories %} <!-- Assuming you pass a list of categories from the view -->
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+
+            <table border="1" width="max-content" class="table">
+                <tr style="background-color:rgba(117, 117, 117, 0.61)">
+                {% if matching_posts %}
+                  <th>Image</th>
+                  <th>Background Color</th>
+                  <th>Heading</th>
+                  <th>Title</th>
+                  <th>Slug</th>
+                  <th>Published Date</th>
+                  <th>Category</th>
+                  <th>Actions</th> <!-- Added a header for actions -->
+              </tr>
+              {% for post in matching_posts %}
+                <tr>
+                    <td class="image_backend">
+                        <a href="{% url 'blog_detail' slug=post.slug %}" class="post-link" data-slug="{{ post.slug }}">
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                        </a>
+                    </td>
+                    <td style="background-color: {{ post.background_color }};">{{ post.background_color }}</td>
+                    <td>{{ post.heading }}</td>
+                    <td>{{ post.title | truncatechars:200 }}</td>
+                    <td>{{ post.slug }}</td>
+                    <td>{{ post.pub_date }}</td>
+                    <td>{{ post.category.name }}</td>
+                    <td>
+                        <a href="{% url 'updatepost' post.id %}">Edit Post</a>
+                        <form action="{% url 'delete-post' post.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+              {% endfor %}
+              {% else %}
+                  <tr>
+                      <td colspan="8" style="color: red; text-align: center;">No data found</td>
+                  </tr>
+              {% endif %}
+              </table>
+        </div>
+    </div>
+</body>
+</html>
