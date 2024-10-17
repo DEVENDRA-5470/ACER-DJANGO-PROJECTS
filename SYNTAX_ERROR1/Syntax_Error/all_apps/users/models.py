@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils.timezone import now
 
 # Profile model
 class Profile(models.Model):
@@ -25,7 +25,7 @@ class Stats(models.Model):
     total_downloads = models.IntegerField(null=True, default=0)
     topic_names = models.TextField(null=True, blank=True)
     total_logins = models.IntegerField(null=True, default=0)
-    last_login = models.DateField(auto_now=True)
+    last_login = models.CharField(null=True, blank=True,max_length=200)
 
     def __str__(self):
         return f"Stats for {self.profile.user.username}"

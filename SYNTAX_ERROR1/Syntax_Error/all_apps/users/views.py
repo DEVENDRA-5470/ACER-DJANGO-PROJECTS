@@ -143,3 +143,10 @@ def stats(request):
         return redirect(topic.pdf.url)
     # If it's a GET request, render a stats page
     return render(request, 'alls.html')
+
+
+
+def view_stats(request):
+    # Assuming you're getting the current user's stats
+    stats = Stats.objects.get(profile__user=request.user)
+    return render(request, 'stats.html', {'stats': stats})
